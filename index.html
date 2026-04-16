@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doubt Yourself</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <h1 class="site-title">Doubt Yourself</h1>
+
+        <nav class="nav">
+          <a href="index.html" class="active">Original Questions</a>
+          <a href="user-questions.html">Make Your Own Questions</a>
+        </nav>
+      </header>
+
+      <section class="section">
+        <h2 class="section-title">Original Questions</h2>
+
+        <div class="cards-stage-wrapper">
+          <div class="scroll-arrow scroll-arrow-left" aria-hidden="true">➜</div>
+
+          <div class="cards-stage" id="originalCardsStage">
+            <div class="cards-container" id="questionsContainer"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="info-tab" id="infoTab" onclick="openInfoPanel()">
+      What is this?
+    </div>
+
+    <div class="info-panel" id="infoPanel">
+      <div class="info-panel-topbar">
+        <button class="info-close" onclick="closeInfoPanel()">×</button>
+        <div class="card-dot"></div>
+        <div class="card-dot"></div>
+        <div class="card-dot"></div>
+      </div>
+      <div class="info-panel-body">
+        <p>
+          This open project is meant to keep you questioning and doubting
+          yourself about what time is and how time affects us. The home page is
+          a small set of questions meant to begin fueling and warming up your
+          brain into thinking of more questions. If you're not curious or you
+          don't enjoy thinking and rethinking what time is and what it does to
+          us, then use this as a way to just answer fun questions. It's up to
+          you, the user, to choose how you would like to keep and digest the
+          information.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      const originalQuestionsDefault = [
+        {
+          question:
+            "What moment in your life do you wish you could pause forever?",
+          answers: [],
+        },
+        {
+          question: "When did time feel the slowest to you?",
+          answers: [],
+        },
+        {
+          question:
+            "What is something you miss that no longer exists in your life?",
+          answers: [],
+        },
+        {
+          question: "Have you ever felt like time healed something in you?",
+          answers: [],
+        },
+        {
+          question:
+            "What is a memory that still feels alive when you think about it?",
+          answers: [],
+        },
+        {
+          question: "What would you tell your younger self about time?",
+          answers: [],
+        },
+      ];
+
+      function getOriginalQuestions() {
+        const saved = localStorage.getItem("doubtYourselfOriginalQuestions");
+        if (!saved) return JSON.parse(JSON.stringify(originalQuestionsDefault));
+
+        try {
+          const parsed = JSON.parse(saved);
+
+          return originalQuestionsDefault.map((item, index) => ({
+            question: item.question,
+            answers: Array.isArray(parsed[index]?.answers)
+              ? parsed[index].answers
+              : [],
+          }));
+        } catch (error) {
+          return JSON.parse(JSON.stringify(originalQuestionsDefault));
+        }
+      }
+
+      function saveOriginalQuestions(questions) {
+        localStorage.setItem(
+          "doubtYourselfOriginalQuestions",
+          JSON.stringify(questions)
+        );
+      }
+
+      function createQuestionCard(item, index) {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const answersHTML = item.answers.length
+          ? item.answers
+              .map(
+                (answer) =>
+                  `<div class="answer-item">${escapeHTML(answer)}</div>`
+              )
+              .join("")
+          : `<div class="answer-item empty-answer">No answers yet.</div>`;
+
+        card.innerHTML = `
+        <div class="card-topbar">
+          <div class="card-dot"></div>
+          <div class="card-dot"></div>
+          <div class="card-dot"></div>
+        </div>
+
+        <div class="card-body">
+          <div class="card-question">${escapeHTML(item.question)}</div>
+          <textarea id="original-answer-${index}" rows="4" placeholder="Write your answer..."></textarea>
+          <button onclick="submitOriginalAnswer(${index})">Add Answer</button>
+          <div class="answers-list">
+            ${answersHTML}
+          </div>
+        </div>
+      `;
+
+        return card;
+      }
+
+      function renderOriginalQuestions() {
+        const container = document.getElementById("questionsContainer");
+        const originalQuestions = getOriginalQuestions();
+
+        container.innerHTML = "";
+
+        originalQuestions.forEach((item, index) => {
+          container.appendChild(createQuestionCard(item, index));
+        });
+      }
+
+      function submitOriginalAnswer(index) {
+        const textarea = document.getElementById(`original-answer-${index}`);
+        const value = textarea.value.trim();
+
+        if (!value) return;
+
+        const originalQuestions = getOriginalQuestions();
+        originalQuestions[index].answers.push(value);
+        saveOriginalQuestions(originalQuestions);
+        renderOriginalQuestions();
+      }
+
+      function openInfoPanel() {
+        document.getElementById("infoPanel").classList.add("open");
+        document.getElementById("infoTab").classList.add("hidden");
+      }
+
+      function closeInfoPanel() {
+        document.getElementById("infoPanel").classList.remove("open");
+        document.getElementById("infoTab").classList.remove("hidden");
+      }
+
+      function escapeHTML(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      renderOriginalQuestions();
+    </script>
+  </body>
+</html>
