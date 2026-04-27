@@ -9,7 +9,7 @@
   <body>
     <div class="page">
       <header class="topbar">
-        <h1 class="site-title">Doubt Yourself</h1>
+        <h1 class="site-title">What Is Time?</h1>
 
         <nav class="nav">
           <a href="index.html" class="active">Original Questions</a>
@@ -51,6 +51,23 @@
           us, then use this as a way to just answer fun questions. It's up to
           you, the user, to choose how you would like to keep and digest the
           information.
+        </p>
+      </div>
+    </div>
+
+    <div class="Rule-tab" id="RuleTab" onclick="openInfoPanel()">RULES</div>
+
+    <div class="Rule-panel" id="RulePanel">
+      <div class="Rule-panel-topbar">
+        <button class="info-close" onclick="closeInfoPanel()">×</button>
+        <div class="card-dot"></div>
+        <div class="card-dot"></div>
+        <div class="card-dot"></div>
+      </div>
+      <div class="Rule-panel-body">
+        <p>
+          The only rule is that it has to involve time—whether it’s reflective
+          or unserious, it doesnt matter it just has to be about time.
         </p>
       </div>
     </div>
@@ -175,6 +192,16 @@
       function closeInfoPanel() {
         document.getElementById("infoPanel").classList.remove("open");
         document.getElementById("infoTab").classList.remove("hidden");
+      }
+
+      function openRulePanel() {
+        document.getElementById("RulePanel").classList.add("open");
+        document.getElementById("RuleTab").classList.add("hidden");
+      }
+
+      function closeRulePanel() {
+        document.getElementById("RulePanel").classList.remove("open");
+        document.getElementById("RuleTab").classList.remove("hidden");
       }
 
       function escapeHTML(str) {

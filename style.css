@@ -13,7 +13,12 @@
 body {
   margin: 0;
   padding: 0;
-  background: var(--white);
+  /* background: #0051ff;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 81, 255, 1) 0%,
+    rgba(232, 255, 43, 1) 100%
+  ); */
   color: var(--blue);
   font-family: Helvetica, Arial, sans-serif;
   font-size: 12px;
@@ -127,7 +132,7 @@ a {
 .card {
   width: 360px;
   min-width: 360px;
-  background: var(--white);
+  background: #ffffff;
   border: 1px solid var(--blue);
   padding: 22px 22px 20px;
   position: relative;
@@ -480,12 +485,26 @@ textarea:disabled {
   text-transform: uppercase;
   cursor: pointer;
 }
-
+.Rule-tab {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 999;
+  background: var(--yellow);
+  color: var(--blue);
+  border: 1px solid var(--line);
+  padding: 10px 14px;
+  font-size: 12px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.Rule-tab,
 .info-tab:hover {
   background: var(--blue);
   color: var(--yellow);
 }
 
+.Rule-tab,
 .info-tab.hidden {
   display: none;
 }
@@ -501,11 +520,24 @@ textarea:disabled {
   z-index: 998;
   display: none;
 }
+.Rule-panel {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  width: 420px;
+  max-width: calc(100vw - 28px);
+  background: var(--white);
+  border: 1px solid var(--line);
+  z-index: 998;
+  display: none;
+}
 
+.Rule-tab.open,
 .info-panel.open {
   display: block;
 }
 
+.Rule-tab-topbar,
 .info-panel-topbar {
   height: 28px;
   border-bottom: 1px solid var(--line);
@@ -516,6 +548,7 @@ textarea:disabled {
   background: var(--yellow);
 }
 
+.Rule-close,
 .info-close {
   border: none;
   background: transparent;
@@ -528,15 +561,18 @@ textarea:disabled {
   text-transform: none;
 }
 
+.Rule-close,
 .info-close:hover {
   background: transparent;
   color: var(--blue);
 }
 
+.Rule-panel-body,
 .info-panel-body {
   padding: 20px;
 }
 
+.Rule-panel-body,
 .info-panel-body p {
   margin: 0;
   font-size: 12px;
