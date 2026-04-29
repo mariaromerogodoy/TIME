@@ -3,81 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Make Your Own Questions — Doubt Yourself</title>
+    <title>Make Your Own Questions</title>
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
-    <div class="page">
-      <header class="topbar">
-        <h1 class="site-title">What Is Time?</h1>
-
-        <nav class="nav">
-          <a href="index.html">Original Questions</a>
-          <a href="user-questions.html" class="active"
-            >Make Your Own Questions</a
-          >
-        </nav>
-      </header>
-
-      <section class="section">
-        <h2 class="section-title">Make Your Own Questions</h2>
-
-        <div class="cards-stage-wrapper">
-          <div class="scroll-arrow scroll-arrow-left" aria-hidden="true">➜</div>
-
-          <div class="cards-stage" id="userCardsStage">
-            <div class="cards-container" id="userQuestionsContainer"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="addQuestionSection" style="display: none">
-        <h2 class="section-title">Add a Question</h2>
-
-        <div class="submit-question-box">
-          <div class="submit-question-box-topbar">
-            <div class="card-dot"></div>
-            <div class="card-dot"></div>
-            <div class="card-dot"></div>
-          </div>
-
-          <div class="submit-question-box-body">
-            <label class="label" for="newQuestion">Your Question</label>
-            <input
-              type="text"
-              id="newQuestion"
-              placeholder="Write your own question..."
-            />
-            <button onclick="addUserQuestion()">Submit</button>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <div class="info-tab" id="infoTab" onclick="openInfoPanel()">
-      What is this?
-    </div>
-
-    <div class="info-panel" id="infoPanel">
-      <div class="info-panel-topbar">
-        <button class="info-close" onclick="closeInfoPanel()">×</button>
-        <div class="card-dot"></div>
-        <div class="card-dot"></div>
-        <div class="card-dot"></div>
+    <header class="topbar">
+      <div class="marquee-track">
+        <span>QUESTIONS ABOUT TIME</span>
+        <span>QUESTIONS ABOUT TIME</span>
+        <span>QUESTIONS ABOUT TIME</span>
+        <span>QUESTIONS ABOUT TIME</span>
+        <span>QUESTIONS ABOUT TIME</span>
+        <span>QUESTIONS ABOUT TIME</span>
+        <span>QUESTIONS ABOUT TIME</span>
+        <span>QUESTIONS ABOUT TIME</span>
       </div>
-      <div class="info-panel-body">
-        <p>
-          This open project is meant to keep you questioning and doubting
-          yourself about what time is and how time affects us. The home page is
-          a small set of questions meant to begin fueling and warming up your
-          brain into thinking of more questions. If you're not curious or you
-          don't enjoy thinking and rethinking what time is and what it does to
-          us, then use this as a way to just answer fun questions. It's up to
-          you, the user, to choose how you would like to keep and digest the
-          information.
-        </p>
+    </header>
+
+    <nav class="page-buttons">
+      <a href="user-questions.html">MAKE YOUR OWN QUESTIONS</a>
+      <a href="index.html">ORIGINAL QUESTIONS</a>
+    </nav>
+
+    <main class="stage">
+      <div class="cards-container" id="userQuestionsContainer"></div>
+    </main>
+
+    <section id="addQuestionSection" class="add-question-popup">
+      <input
+        type="text"
+        id="newQuestion"
+        placeholder="WRITE YOUR OWN QUESTION..."
+      />
+      <button onclick="addUserQuestion()">SUBMIT</button>
+    </section>
+
+    <footer class="footerbar">
+      <div class="marquee-track">
+        <span>1 RULE... EVERYTHING HAS TO BE ABOUT TIME</span>
+        <span>1 RULE... EVERYTHING HAS TO BE ABOUT TIME</span>
+        <span>1 RULE... EVERYTHING HAS TO BE ABOUT TIME</span>
+        <span>1 RULE... EVERYTHING HAS TO BE ABOUT TIME</span>
+        <span>1 RULE... EVERYTHING HAS TO BE ABOUT TIME</span>
+        <span>1 RULE... EVERYTHING HAS TO BE ABOUT TIME</span>
       </div>
-    </div>
+    </footer>
 
     <script>
       function getUserQuestions() {
@@ -103,46 +74,22 @@
                   `<div class="answer-item">${escapeHTML(answer)}</div>`
               )
               .join("")
-          : `<div class="answer-item empty-answer">No answers yet.</div>`;
+          : `<div class="answer-item">NO THOUGHTS YET.</div>`;
 
         card.innerHTML = `
-        <div class="card-topbar">
-          <div class="card-dot"></div>
-          <div class="card-dot"></div>
-          <div class="card-dot"></div>
+        <button class="back-btn" onclick="goBack(this)">↺</button>
+
+        <div class="card-question">${escapeHTML(item.question)}</div>
+
+        <textarea placeholder="TYPE YOUR THOUGHTS..."></textarea>
+
+        <div class="card-buttons">
+          <button class="thoughts-btn" onclick="startWriting(this)">YOUR THOUGHTS</button>
+          <button class="other-btn" onclick="showOtherThoughts(this)">OTHER PEOPLES THOUGHTS</button>
         </div>
 
-        <div class="card-body">
-          <div class="card-question">${escapeHTML(item.question)}</div>
-          <textarea id="user-answer-${index}" rows="4" placeholder="Write your answer..."></textarea>
-          <button onclick="submitUserAnswer(${index})">Add Answer</button>
-          <div class="answers-list">
-            ${answersHTML}
-          </div>
-        </div>
-      `;
-
-        return card;
-      }
-
-      function createEmptyCard() {
-        const card = document.createElement("div");
-        card.className = "card";
-
-        card.innerHTML = `
-        <div class="card-topbar">
-          <div class="card-dot"></div>
-          <div class="card-dot"></div>
-          <div class="card-dot"></div>
-        </div>
-
-        <div class="card-body">
-          <div class="card-question empty-answer">No questions yet.</div>
-          <textarea rows="4" placeholder="Write your answer..." disabled></textarea>
-          <button disabled>Add Answer</button>
-          <div class="answers-list">
-            <div class="answer-item empty-answer">Questions submitted here will appear in this section.</div>
-          </div>
+        <div class="answers-list">
+          ${answersHTML}
         </div>
       `;
 
@@ -154,22 +101,11 @@
         card.className = "card add-card";
 
         card.innerHTML = `
-        <div class="card-topbar">
-          <div class="card-dot"></div>
-          <div class="card-dot"></div>
-          <div class="card-dot"></div>
-        </div>
-
-        <div class="add-card-inner" onclick="toggleAddQuestionForm()">
-          <div class="add-symbol">+</div>
-          <div class="add-text">Add a Question</div>
-          <div>
-            <div class="glitch-line"></div>
-            <div class="add-card-note">Open input</div>
-          </div>
-        </div>
+        <div class="add-symbol">+</div>
+        <div class="add-text">ADD A<br>QUESTION</div>
       `;
 
+        card.onclick = toggleAddQuestionForm;
         return card;
       }
 
@@ -178,27 +114,15 @@
         const userQuestions = getUserQuestions();
 
         container.innerHTML = "";
-
-        if (!userQuestions.length) {
-          container.appendChild(createEmptyCard());
-        } else {
-          userQuestions.forEach((item, index) => {
-            container.appendChild(createQuestionCard(item, index));
-          });
-        }
-
         container.appendChild(createAddCard());
+
+        userQuestions.forEach((item, index) => {
+          container.appendChild(createQuestionCard(item, index));
+        });
       }
 
       function toggleAddQuestionForm() {
-        const section = document.getElementById("addQuestionSection");
-        const isHidden = section.style.display === "none";
-
-        section.style.display = isHidden ? "block" : "none";
-
-        if (isHidden) {
-          section.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        document.getElementById("addQuestionSection").classList.toggle("open");
       }
 
       function addUserQuestion() {
@@ -208,37 +132,60 @@
         if (!question) return;
 
         const userQuestions = getUserQuestions();
-        userQuestions.unshift({
-          question: question,
-          answers: [],
-        });
+        userQuestions.unshift({ question: question, answers: [] });
 
         saveUserQuestions(userQuestions);
+
         input.value = "";
+        document.getElementById("addQuestionSection").classList.remove("open");
         renderUserQuestions();
-        document.getElementById("addQuestionSection").style.display = "none";
       }
 
-      function submitUserAnswer(index) {
-        const textarea = document.getElementById(`user-answer-${index}`);
+      function startWriting(button) {
+        const card = button.closest(".card");
+        card.classList.add("writing");
+        card.classList.remove("viewing");
+
+        button.textContent = "SUBMIT";
+        button.onclick = function () {
+          submitUserAnswer(card);
+        };
+
+        card.querySelector("textarea").focus();
+      }
+
+      function submitUserAnswer(card) {
+        const textarea = card.querySelector("textarea");
         const value = textarea.value.trim();
 
         if (!value) return;
 
+        const index = Array.from(card.parentElement.children).indexOf(card) - 1;
         const userQuestions = getUserQuestions();
+
         userQuestions[index].answers.push(value);
         saveUserQuestions(userQuestions);
         renderUserQuestions();
       }
 
-      function openInfoPanel() {
-        document.getElementById("infoPanel").classList.add("open");
-        document.getElementById("infoTab").classList.add("hidden");
+      function showOtherThoughts(button) {
+        const card = button.closest(".card");
+        card.classList.add("viewing");
+        card.classList.remove("writing");
       }
 
-      function closeInfoPanel() {
-        document.getElementById("infoPanel").classList.remove("open");
-        document.getElementById("infoTab").classList.remove("hidden");
+      function goBack(button) {
+        const card = button.closest(".card");
+        card.classList.remove("writing");
+        card.classList.remove("viewing");
+
+        const thoughtsBtn = card.querySelector(".thoughts-btn");
+        thoughtsBtn.textContent = "YOUR THOUGHTS";
+        thoughtsBtn.onclick = function () {
+          startWriting(this);
+        };
+
+        card.querySelector("textarea").value = "";
       }
 
       function escapeHTML(str) {
