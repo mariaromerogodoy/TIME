@@ -24,7 +24,7 @@ body {
   position: fixed;
   left: 0;
   width: 100vw;
-  height: 55px;
+  height: 50px;
   background: var(--yellow);
   border: 1px solid var(--blue);
   overflow: hidden;
@@ -61,34 +61,62 @@ body {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
 }
-
-/* PAGE BUTTONS */
 
 .page-buttons {
   position: fixed;
   top: 106px;
   left: 21px;
-  z-index: 1001;
+  z-index: 3000;
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
 .page-buttons a {
+  outline: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   height: 32px;
+  width: fit-content;
+  padding: 0 12px;
+
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-decoration: none;
+
   background: var(--yellow);
   color: var(--blue);
   border: 2px solid var(--blue);
   box-shadow: 4px 4px 0 var(--blue);
-  padding: 0 10px;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: normal;
+
+  cursor: pointer;
+  transition: transform 0.14s ease-out, box-shadow 0.14s ease-out,
+    background 0.14s ease-out, color 0.14s ease-out;
+}
+
+.page-buttons a:hover {
+  background: var(--yellow);
+  color: var(--blue);
+  box-shadow: 8px 8px 0 var(--blue);
+  transform: translate(-4px, -4px);
+}
+
+.page-buttons a:active {
+  transform: translate(0, 0);
+  box-shadow: 4px 4px 0 var(--blue);
+}
+
+.page-buttons a:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
 }
 
 /* MAIN STAGE */
@@ -100,128 +128,174 @@ body {
   width: 100vw;
   height: calc(100vh - 148px);
   overflow: hidden;
+  perspective: 1200px;
 }
+
+/* FIXED OVAL AREA */
 
 .cards-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 760px;
+  height: 360px;
+  transform: translate(-50%, -50%);
 }
 
-/* CARDS */
+/* CARDS MOVE AROUND THE FIXED OVAL */
 
 .card {
   position: absolute;
-  width: 260px;
-  height: 300px;
+  width: 200px;
+  height: 230px;
   background: var(--white);
   border: 2px solid var(--blue);
   box-shadow: 6px 6px 0 var(--blue);
   color: var(--blue);
-  padding: 12px;
+  padding: 10px;
   overflow: visible;
+  offset-path: ellipse(360px 150px at 380px 180px);
+  offset-rotate: 0deg;
+  animation: moveAroundOval 38s linear infinite;
+  transition: scale 0.25s ease;
 }
+
+/* starting positions around the oval */
 
 .card:nth-child(1) {
-  left: 12%;
-  top: 42%;
-  z-index: 50;
-}
-.card:nth-child(2) {
-  left: 18%;
-  top: 34%;
-  z-index: 10;
-}
-.card:nth-child(3) {
-  left: 23%;
-  top: 25%;
-  z-index: 11;
-}
-.card:nth-child(4) {
-  left: 29%;
-  top: 18%;
-  z-index: 12;
-}
-.card:nth-child(5) {
-  left: 34%;
-  top: 13%;
-  z-index: 13;
-}
-.card:nth-child(6) {
-  left: 40%;
-  top: 8%;
-  z-index: 14;
-}
-.card:nth-child(7) {
-  left: 48%;
-  top: 12%;
-  z-index: 15;
-}
-.card:nth-child(8) {
-  left: 54%;
-  top: 15%;
-  z-index: 16;
-}
-.card:nth-child(9) {
-  left: 60%;
-  top: 19%;
-  z-index: 17;
-}
-.card:nth-child(10) {
-  left: 66%;
-  top: 24%;
-  z-index: 18;
-}
-.card:nth-child(11) {
-  left: 72%;
-  top: 30%;
-  z-index: 19;
-}
-.card:nth-child(12) {
-  left: 68%;
-  top: 46%;
+  --start: 0%;
+  offset-distance: 0%;
   z-index: 20;
 }
-.card:nth-child(13) {
-  left: 58%;
-  top: 55%;
-  z-index: 21;
-}
-.card:nth-child(14) {
-  left: 47%;
-  top: 60%;
-  z-index: 22;
-}
-.card:nth-child(15) {
-  left: 35%;
-  top: 56%;
-  z-index: 23;
-}
-.card:nth-child(16) {
-  left: 24%;
-  top: 50%;
-  z-index: 24;
+
+.card:nth-child(2) {
+  --start: 6.25%;
+  offset-distance: 6.25%;
+  z-index: 19;
 }
 
+.card:nth-child(3) {
+  --start: 12.5%;
+  offset-distance: 12.5%;
+  z-index: 18;
+}
+
+.card:nth-child(4) {
+  --start: 18.75%;
+  offset-distance: 18.75%;
+  z-index: 17;
+}
+
+.card:nth-child(5) {
+  --start: 25%;
+  offset-distance: 25%;
+  z-index: 16;
+}
+
+.card:nth-child(6) {
+  --start: 31.25%;
+  offset-distance: 31.25%;
+  z-index: 15;
+}
+
+.card:nth-child(7) {
+  --start: 37.5%;
+  offset-distance: 37.5%;
+  z-index: 14;
+}
+
+.card:nth-child(8) {
+  --start: 43.75%;
+  offset-distance: 43.75%;
+  z-index: 13;
+}
+
+.card:nth-child(9) {
+  --start: 50%;
+  offset-distance: 50%;
+  z-index: 12;
+}
+
+.card:nth-child(10) {
+  --start: 56.25%;
+  offset-distance: 56.25%;
+  z-index: 11;
+}
+
+.card:nth-child(11) {
+  --start: 62.5%;
+  offset-distance: 62.5%;
+  z-index: 10;
+}
+
+.card:nth-child(12) {
+  --start: 68.75%;
+  offset-distance: 68.75%;
+  z-index: 9;
+}
+
+.card:nth-child(13) {
+  --start: 75%;
+  offset-distance: 75%;
+  z-index: 8;
+}
+
+.card:nth-child(14) {
+  --start: 81.25%;
+  offset-distance: 81.25%;
+  z-index: 7;
+}
+
+.card:nth-child(15) {
+  --start: 87.5%;
+  offset-distance: 87.5%;
+  z-index: 6;
+}
+
+.card:nth-child(16) {
+  --start: 93.75%;
+  offset-distance: 93.75%;
+  z-index: 5;
+}
+
+@keyframes moveAroundOval {
+  from {
+    offset-distance: var(--start);
+  }
+
+  to {
+    offset-distance: calc(var(--start) + 100%);
+  }
+}
+
+/* pause orbit when hovering the card area */
+
+.cards-container:hover .card {
+  animation-play-state: paused;
+}
+
+/* hovered card gets bigger */
+
 .card:hover {
+  scale: 1.35;
   z-index: 999;
 }
 
 /* NORMAL CARD STATE */
 
 .card-question {
-  font-size: 13px;
+  font-size: 11px;
   line-height: 1.15;
-  margin-bottom: 128px;
+  margin-bottom: 95px;
 }
 
 .card-buttons {
   position: absolute;
-  left: 16px;
-  bottom: 18px;
+  left: 10px;
+  bottom: 12px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 }
 
 button {
@@ -229,10 +303,10 @@ button {
   color: var(--blue);
   border: 2px solid var(--blue);
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: normal;
   text-transform: uppercase;
-  padding: 4px 8px;
+  padding: 3px 6px;
   box-shadow: none;
   cursor: pointer;
 }
@@ -248,13 +322,14 @@ button:hover {
   position: absolute;
   top: -12px;
   right: -12px;
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   padding: 0;
   background: var(--yellow);
   color: var(--blue);
   border: 2px solid var(--blue);
-  font-size: 22px;
+  font-size: 18px;
+  line-height: 1;
   display: none;
   align-items: center;
   justify-content: center;
@@ -266,14 +341,14 @@ button:hover {
 textarea {
   display: none;
   width: 100%;
-  height: 155px;
+  height: 125px;
   background: var(--white);
   color: var(--blue);
   border: 2px solid var(--blue);
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 13px;
+  font-size: 11px;
   text-transform: uppercase;
-  padding: 10px;
+  padding: 8px;
   resize: none;
   outline: none;
 }
@@ -299,8 +374,8 @@ textarea::placeholder {
 }
 
 .card.writing .card-buttons {
-  right: 14px;
-  bottom: 14px;
+  right: 10px;
+  bottom: 10px;
   left: auto;
 }
 
@@ -325,9 +400,9 @@ textarea::placeholder {
   display: block;
   background: var(--white);
   border: 2px solid var(--blue);
-  padding: 12px;
-  margin-bottom: 20px;
-  font-size: 13px;
+  padding: 8px;
+  margin-bottom: 14px;
+  font-size: 11px;
   line-height: 1.15;
 }
 
@@ -343,11 +418,14 @@ textarea::placeholder {
 }
 
 .add-symbol {
-  font-size: 51px;
+  font-size: 42px;
+  font-weight: bold;
+  line-height: 1;
 }
 
 .add-text {
-  font-size: 19px;
+  font-size: 15px;
+  line-height: 0.95;
 }
 
 /* ADD QUESTION POPUP */
