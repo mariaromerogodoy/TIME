@@ -17,8 +17,6 @@ body {
   text-transform: uppercase;
 }
 
-/* HEADER + FOOTER */
-
 .topbar,
 .footerbar {
   position: fixed;
@@ -26,7 +24,7 @@ body {
   width: 100vw;
   height: 50px;
   background: var(--yellow);
-  border: 1px solid var(--blue);
+  border: 1.5px solid var(--blue);
   overflow: hidden;
   z-index: 1000;
   display: flex;
@@ -76,47 +74,23 @@ body {
 }
 
 .page-buttons a {
-  outline: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
   height: 32px;
   width: fit-content;
   padding: 0 12px;
-
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  font-weight: normal;
-  text-transform: uppercase;
-  white-space: nowrap;
-  text-decoration: none;
-
   background: var(--yellow);
   color: var(--blue);
-  border: 2px solid var(--blue);
+  border: 1.5px solid var(--blue);
   box-shadow: 4px 4px 0 var(--blue);
-
-  cursor: pointer;
-  transition: transform 0.14s ease-out, box-shadow 0.14s ease-out,
-    background 0.14s ease-out, color 0.14s ease-out;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 12px;
+  transition: 0.14s ease-out;
 }
 
 .page-buttons a:hover {
-  background: var(--yellow);
-  color: var(--blue);
-  box-shadow: 8px 8px 0 var(--blue);
   transform: translate(-4px, -4px);
-}
-
-.page-buttons a:active {
-  transform: translate(0, 0);
-  box-shadow: 4px 4px 0 var(--blue);
-}
-
-.page-buttons a:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 2px;
+  box-shadow: 8px 8px 0 var(--blue);
 }
 
 /* MAIN STAGE */
@@ -128,160 +102,132 @@ body {
   width: 100vw;
   height: calc(100vh - 148px);
   overflow: hidden;
-  perspective: 1200px;
 }
-
-/* FIXED OVAL AREA */
 
 .cards-container {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 760px;
-  height: 360px;
+  width: 980px;
+  height: 530px;
   transform: translate(-50%, -50%);
 }
-
-/* CARDS MOVE AROUND THE FIXED OVAL */
 
 .card {
   position: absolute;
   width: 200px;
   height: 230px;
   background: var(--white);
-  border: 2px solid var(--blue);
-  box-shadow: 6px 6px 0 var(--blue);
   color: var(--blue);
+  border: 1.5px solid var(--blue);
+  box-shadow: 6px 6px 0 var(--blue);
   padding: 10px;
   overflow: visible;
-  offset-path: ellipse(360px 150px at 380px 180px);
+
+  offset-path: ellipse(420px 210px at 490px 260px);
   offset-rotate: 0deg;
-  animation: moveAroundOval 38s linear infinite;
-  transition: scale 0.25s ease;
+  animation: cardOrbit 55s linear infinite;
+
+  transition: transform 0.2s ease;
 }
-
-/* starting positions around the oval */
-
-.card:nth-child(1) {
-  --start: 0%;
-  offset-distance: 0%;
-  z-index: 20;
-}
-
-.card:nth-child(2) {
-  --start: 6.25%;
-  offset-distance: 6.25%;
-  z-index: 19;
-}
-
-.card:nth-child(3) {
-  --start: 12.5%;
-  offset-distance: 12.5%;
-  z-index: 18;
-}
-
-.card:nth-child(4) {
-  --start: 18.75%;
-  offset-distance: 18.75%;
-  z-index: 17;
-}
-
-.card:nth-child(5) {
-  --start: 25%;
-  offset-distance: 25%;
-  z-index: 16;
-}
-
-.card:nth-child(6) {
-  --start: 31.25%;
-  offset-distance: 31.25%;
-  z-index: 15;
-}
-
-.card:nth-child(7) {
-  --start: 37.5%;
-  offset-distance: 37.5%;
-  z-index: 14;
-}
-
-.card:nth-child(8) {
-  --start: 43.75%;
-  offset-distance: 43.75%;
-  z-index: 13;
-}
-
-.card:nth-child(9) {
-  --start: 50%;
-  offset-distance: 50%;
-  z-index: 12;
-}
-
-.card:nth-child(10) {
-  --start: 56.25%;
-  offset-distance: 56.25%;
-  z-index: 11;
-}
-
-.card:nth-child(11) {
-  --start: 62.5%;
-  offset-distance: 62.5%;
-  z-index: 10;
-}
-
-.card:nth-child(12) {
-  --start: 68.75%;
-  offset-distance: 68.75%;
-  z-index: 9;
-}
-
-.card:nth-child(13) {
-  --start: 75%;
-  offset-distance: 75%;
-  z-index: 8;
-}
-
-.card:nth-child(14) {
-  --start: 81.25%;
-  offset-distance: 81.25%;
-  z-index: 7;
-}
-
-.card:nth-child(15) {
-  --start: 87.5%;
-  offset-distance: 87.5%;
-  z-index: 6;
-}
-
-.card:nth-child(16) {
-  --start: 93.75%;
-  offset-distance: 93.75%;
-  z-index: 5;
-}
-
-@keyframes moveAroundOval {
-  from {
-    offset-distance: var(--start);
-  }
-
-  to {
-    offset-distance: calc(var(--start) + 100%);
-  }
-}
-
-/* pause orbit when hovering the card area */
 
 .cards-container:hover .card {
   animation-play-state: paused;
 }
 
-/* hovered card gets bigger */
-
 .card:hover {
-  scale: 1.35;
   z-index: 999;
+  transform: scale(1.25);
 }
 
-/* NORMAL CARD STATE */
+.card:nth-child(1) {
+  --start: 0%;
+  offset-distance: 0%;
+}
+
+.card:nth-child(2) {
+  --start: 6.25%;
+  offset-distance: 6.25%;
+}
+
+.card:nth-child(3) {
+  --start: 12.5%;
+  offset-distance: 12.5%;
+}
+
+.card:nth-child(4) {
+  --start: 18.75%;
+  offset-distance: 18.75%;
+}
+
+.card:nth-child(5) {
+  --start: 25%;
+  offset-distance: 25%;
+}
+
+.card:nth-child(6) {
+  --start: 31.25%;
+  offset-distance: 31.25%;
+}
+
+.card:nth-child(7) {
+  --start: 37.5%;
+  offset-distance: 37.5%;
+}
+
+.card:nth-child(8) {
+  --start: 43.75%;
+  offset-distance: 43.75%;
+}
+
+.card:nth-child(9) {
+  --start: 50%;
+  offset-distance: 50%;
+}
+
+.card:nth-child(10) {
+  --start: 56.25%;
+  offset-distance: 56.25%;
+}
+
+.card:nth-child(11) {
+  --start: 62.5%;
+  offset-distance: 62.5%;
+}
+
+.card:nth-child(12) {
+  --start: 68.75%;
+  offset-distance: 68.75%;
+}
+
+.card:nth-child(13) {
+  --start: 75%;
+  offset-distance: 75%;
+}
+
+.card:nth-child(14) {
+  --start: 81.25%;
+  offset-distance: 81.25%;
+}
+
+.card:nth-child(15) {
+  --start: 87.5%;
+  offset-distance: 87.5%;
+}
+
+.card:nth-child(16) {
+  --start: 93.75%;
+  offset-distance: 93.75%;
+}
+
+@keyframes cardOrbit {
+  from {
+    offset-distance: var(--start);
+  }
+  to {
+    offset-distance: calc(var(--start) + 100%);
+  }
+}
 
 .card-question {
   font-size: 11px;
@@ -301,13 +247,11 @@ body {
 button {
   background: var(--yellow);
   color: var(--blue);
-  border: 2px solid var(--blue);
+  border: 1.5px solid var(--blue);
   font-family: Helvetica, Arial, sans-serif;
   font-size: 10px;
-  font-weight: normal;
   text-transform: uppercase;
   padding: 3px 6px;
-  box-shadow: none;
   cursor: pointer;
 }
 
@@ -316,37 +260,15 @@ button:hover {
   color: var(--yellow);
 }
 
-/* BACK ICON */
-
-.back-btn {
-  position: absolute;
-  top: -12px;
-  right: -12px;
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  background: var(--yellow);
-  color: var(--blue);
-  border: 2px solid var(--blue);
-  font-size: 18px;
-  line-height: 1;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-/* WRITING FLOW */
-
 textarea {
   display: none;
   width: 100%;
   height: 125px;
   background: var(--white);
   color: var(--blue);
-  border: 2px solid var(--blue);
+  border: 1.5px solid var(--blue);
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   padding: 8px;
   resize: none;
@@ -356,11 +278,6 @@ textarea {
 textarea::placeholder {
   color: var(--blue);
   opacity: 1;
-}
-
-.card.writing .back-btn,
-.card.viewing .back-btn {
-  display: flex;
 }
 
 .card.writing .card-question,
@@ -374,12 +291,10 @@ textarea::placeholder {
 }
 
 .card.writing .card-buttons {
+  left: auto;
   right: 10px;
   bottom: 10px;
-  left: auto;
 }
-
-/* OTHER THOUGHTS FLOW */
 
 .answers-list {
   display: none;
@@ -399,49 +314,86 @@ textarea::placeholder {
 .answer-item {
   display: block;
   background: var(--white);
-  border: 2px solid var(--blue);
+  color: var(--blue);
+  border: 1.5px solid var(--blue);
   padding: 8px;
   margin-bottom: 14px;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.15;
 }
 
-/* ADD QUESTION CARD */
-
-.add-card {
+.back-btn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 30px;
+  height: 30px;
   background: var(--yellow);
-  box-shadow: 8px 8px 0 var(--blue);
-  cursor: pointer;
+  color: var(--blue);
+  border: 1.5px solid var(--blue);
+  font-size: 18px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 1000;
+}
+
+.card.writing .back-btn,
+.card.viewing .back-btn {
+  display: flex;
+}
+
+.add-floating {
+  position: fixed;
+  left: 24px;
+  bottom: 94px;
+  width: 82px;
+  height: 92px;
+  background: var(--yellow);
+  color: var(--blue);
+  border: 1.5px solid var(--blue);
+  box-shadow: none;
+  z-index: 3000;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: flex-start;
+  padding: 9px;
+  cursor: pointer;
+  transition: 0.15s ease;
 }
 
-.add-symbol {
-  font-size: 42px;
-  font-weight: bold;
+.add-floating:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: none;
+  background: var(--yellow);
+  color: var(--blue);
+}
+
+.add-floating span {
+  font-size: 12px;
   line-height: 1;
 }
 
-.add-text {
-  font-size: 15px;
-  line-height: 0.95;
+.add-floating small {
+  font-size: 12px;
+  line-height: 1;
+  text-align: left;
 }
-
-/* ADD QUESTION POPUP */
 
 .add-question-popup {
   display: none;
   position: fixed;
-  top: 42%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   width: 420px;
+  transform: translate(-50%, -50%);
   background: var(--yellow);
-  border: 2px solid var(--blue);
-  box-shadow: 8px 8px 0 var(--blue);
+  border: 1.5px solid var(--blue);
+  /* box-shadow: 8px 8px 0 var(--blue); */
   padding: 20px;
-  z-index: 2000;
+  z-index: 5000;
 }
 
 .add-question-popup.open {
@@ -451,16 +403,17 @@ textarea::placeholder {
 .add-question-popup input {
   width: 100%;
   height: 44px;
-  border: 2px solid var(--blue);
-  color: var(--blue);
   background: var(--white);
+  color: var(--blue);
+  border: 1.5px solid var(--blue);
   font-family: Helvetica, Arial, sans-serif;
   font-size: 12px;
+  text-transform: uppercase;
   padding: 8px;
   margin-bottom: 16px;
-  text-transform: uppercase;
 }
 
 .add-question-popup input::placeholder {
   color: var(--blue);
+  opacity: 1;
 }

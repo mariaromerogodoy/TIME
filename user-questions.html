@@ -30,6 +30,11 @@
       <div class="cards-container" id="userQuestionsContainer"></div>
     </main>
 
+    <button class="add-floating" onclick="toggleAddQuestionForm()">
+      <span>+</span>
+      <small>ADD A<br />QUESTION</small>
+    </button>
+
     <section id="addQuestionSection" class="add-question-popup">
       <input
         type="text"
@@ -41,7 +46,6 @@
 
     <footer class="footerbar">
       <div class="marquee-track">
-        <span>1 RULE... MUST BE A QUESTION REVOLVING TIME</span>
         <span>1 RULE... MUST BE A QUESTION REVOLVING TIME</span>
         <span>1 RULE... MUST BE A QUESTION REVOLVING TIME</span>
         <span>1 RULE... MUST BE A QUESTION REVOLVING TIME</span>
@@ -77,46 +81,30 @@
           : `<div class="answer-item">NO THOUGHTS YET.</div>`;
 
         card.innerHTML = `
-        <button class="back-btn" onclick="goBack(this)">↺</button>
+        <button class="back-btn" onclick="goBack(event, this)">↺</button>
 
         <div class="card-question">${escapeHTML(item.question)}</div>
 
         <textarea placeholder="TYPE YOUR THOUGHTS..."></textarea>
 
         <div class="card-buttons">
-          <button class="thoughts-btn" onclick="startWriting(this)">YOUR THOUGHTS</button>
-          <button class="other-btn" onclick="showOtherThoughts(this)">OTHER PEOPLES THOUGHTS</button>
+          <button class="thoughts-btn" onclick="startWriting(event, this)">YOUR THOUGHTS</button>
+          <button class="other-btn" onclick="showOtherThoughts(event, this)">OTHER PEOPLES THOUGHTS</button>
         </div>
 
-        <div class="answers-list">
-          ${answersHTML}
-        </div>
+        <div class="answers-list">${answersHTML}</div>
       `;
 
-        return card;
-      }
-
-      function createAddCard() {
-        const card = document.createElement("div");
-        card.className = "card add-card";
-
-        card.innerHTML = `
-        <div class="add-symbol">+</div>
-        <div class="add-text">ADD A<br>QUESTION</div>
-      `;
-
-        card.onclick = toggleAddQuestionForm;
         return card;
       }
 
       function renderUserQuestions() {
         const container = document.getElementById("userQuestionsContainer");
-        const userQuestions = getUserQuestions();
+        const questions = getUserQuestions();
 
         container.innerHTML = "";
-        container.appendChild(createAddCard());
 
-        userQuestions.forEach((item, index) => {
+        questions.forEach((item, index) => {
           container.appendChild(createQuestionCard(item, index));
         });
       }
@@ -131,58 +119,65 @@
 
         if (!question) return;
 
-        const userQuestions = getUserQuestions();
-        userQuestions.unshift({ question: question, answers: [] });
+        const questions = getUserQuestions();
+        questions.unshift({ question: question, answers: [] });
 
-        saveUserQuestions(userQuestions);
+        saveUserQuestions(questions);
 
         input.value = "";
         document.getElementById("addQuestionSection").classList.remove("open");
         renderUserQuestions();
       }
 
-      function startWriting(button) {
+      function startWriting(event, button) {
+        event.stopPropagation();
         const card = button.closest(".card");
+
         card.classList.add("writing");
         card.classList.remove("viewing");
 
         button.textContent = "SUBMIT";
-        button.onclick = function () {
-          submitUserAnswer(card);
+        button.onclick = function (event) {
+          submitUserAnswer(event, card);
         };
 
         card.querySelector("textarea").focus();
       }
 
-      function submitUserAnswer(card) {
+      function submitUserAnswer(event, card) {
+        event.stopPropagation();
+
         const textarea = card.querySelector("textarea");
         const value = textarea.value.trim();
-
         if (!value) return;
 
-        const index = Array.from(card.parentElement.children).indexOf(card) - 1;
-        const userQuestions = getUserQuestions();
+        const index = Array.from(card.parentElement.children).indexOf(card);
+        const questions = getUserQuestions();
 
-        userQuestions[index].answers.push(value);
-        saveUserQuestions(userQuestions);
+        questions[index].answers.push(value);
+        saveUserQuestions(questions);
         renderUserQuestions();
       }
 
-      function showOtherThoughts(button) {
+      function showOtherThoughts(event, button) {
+        event.stopPropagation();
         const card = button.closest(".card");
+
         card.classList.add("viewing");
         card.classList.remove("writing");
       }
 
-      function goBack(button) {
+      function goBack(event, button) {
+        event.stopPropagation();
         const card = button.closest(".card");
+
         card.classList.remove("writing");
         card.classList.remove("viewing");
 
         const thoughtsBtn = card.querySelector(".thoughts-btn");
         thoughtsBtn.textContent = "YOUR THOUGHTS";
-        thoughtsBtn.onclick = function () {
-          startWriting(this);
+        thoughtsBtn.onclick = function (event) {
+          startWriting(event, this);
         };
 
         card.querySelector("textarea").value = "";
