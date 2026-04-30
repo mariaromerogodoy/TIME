@@ -434,3 +434,34 @@ textarea::placeholder {
   color: var(--blue);
   opacity: 1;
 }
+
+.download-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 94px;
+
+  height: 32px;
+  padding: 0 12px;
+
+  display: flex;
+  align-items: center;
+
+  background: var(--yellow);
+  color: var(--blue);
+  border: 1.5px solid var(--blue);
+
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  box-shadow: 4px 4px 0 var(--blue);
+  cursor: pointer;
+
+  transition: 0.14s ease-out;
+}
+
+.download-btn:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 8px 8px 0 var(--blue);
+}
