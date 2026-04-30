@@ -309,6 +309,23 @@ textarea::placeholder {
 .card.viewing .answers-list {
   display: block;
   margin-top: 4px;
+  max-height: 205px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+}
+
+.card.viewing .answers-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card.viewing .answers-list::-webkit-scrollbar-track {
+  background: var(--white);
+  border-left: 2px solid var(--blue);
+}
+
+.card.viewing .answers-list::-webkit-scrollbar-thumb {
+  background: var(--blue);
 }
 
 .answer-item {
