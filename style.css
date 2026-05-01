@@ -107,12 +107,12 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
 }
-
 .cards-container {
   position: relative;
   width: 980px;
-  height: 520px;
-  margin: 0 auto 120px auto;
+  height: 620px;
+  margin: 120px auto 160px auto;
+  padding-top: 0;
 }
 .card {
   position: absolute;
@@ -125,7 +125,7 @@ body {
   padding: 10px;
   overflow: visible;
 
-  offset-path: ellipse(420px 210px at 490px 260px);
+  offset-path: ellipse(480px 260px at 490px 260px);
   offset-rotate: 0deg;
   animation: cardOrbit 55s linear infinite;
 
