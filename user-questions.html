@@ -99,14 +99,25 @@
       }
 
       function renderUserQuestions() {
-        const container = document.getElementById("userQuestionsContainer");
-        const questions = getUserQuestions();
+        const stage = document.querySelector(".stage");
+        const userQuestions = getUserQuestions();
 
-        container.innerHTML = "";
+        stage.innerHTML = "";
 
-        questions.forEach((item, index) => {
-          container.appendChild(createQuestionCard(item, index));
-        });
+        const groupSize = 20;
+
+        for (let i = 0; i < userQuestions.length; i += groupSize) {
+          const oval = document.createElement("div");
+          oval.className = "cards-container";
+
+          const group = userQuestions.slice(i, i + groupSize);
+
+          group.forEach((item, index) => {
+            oval.appendChild(createQuestionCard(item, i + index));
+          });
+
+          stage.appendChild(oval);
+        }
       }
 
       function toggleAddQuestionForm() {

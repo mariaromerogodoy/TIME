@@ -13,7 +13,8 @@ body {
   background: var(--white);
   color: var(--blue);
   font-family: Helvetica, Arial, sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   text-transform: uppercase;
 }
 
@@ -96,23 +97,23 @@ body {
 /* MAIN STAGE */
 
 .stage {
-  position: fixed;
+  position: absolute;
   top: 74px;
   left: 0;
   width: 100vw;
-  height: calc(100vh - 148px);
-  overflow: hidden;
+  min-height: calc(100vh - 148px);
+  padding-top: 40px;
+  padding-bottom: 140px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .cards-container {
-  position: absolute;
-  left: 50%;
-  top: 50%;
+  position: relative;
   width: 980px;
-  height: 530px;
-  transform: translate(-50%, -50%);
+  height: 520px;
+  margin: 0 auto 120px auto;
 }
-
 .card {
   position: absolute;
   width: 200px;
