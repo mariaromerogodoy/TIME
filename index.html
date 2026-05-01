@@ -6,7 +6,42 @@
     <title>Questions About Time</title>
     <link rel="stylesheet" href="style.css" />
   </head>
+  <!-- WHAT THIS IS TAB -->
+  <div class="info-tab" onclick="toggleInfo()">WHAT THIS IS</div>
 
+  <!-- INFO PANEL -->
+  <div id="infoPanel" class="info-panel">
+    <div class="info-content">
+      <p>
+        QUESTIONS ABOUT TIME is an open system where anyone can ask and reflect
+        on time.
+      </p>
+
+      <p>
+        Every contribution becomes part of a shared, evolving archive of
+        thoughts. time effect us all and this system helps us reflect.
+      </p>
+
+      <p>There is only one rule: MUST BE A QUESTION REVOLVING TIME</p>
+
+      <br />
+
+      <p class="license">
+        <a href="https://mariaromerogodoy.github.io/TIME/user-questions.html"
+          >Questions about Time</a
+        >
+        © 2026 by
+        <a href="https://mariaromgod.cargo.site">Maria Romero Godoy</a> is
+        licensed under
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/"
+          >CC BY-SA 4.0</a
+        >
+        <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" />
+        <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" />
+        <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" />
+      </p>
+    </div>
+  </div>
   <body>
     <header class="topbar">
       <div class="marquee-track">
@@ -43,6 +78,10 @@
     </footer>
 
     <script>
+      function toggleInfo() {
+        document.getElementById("infoPanel").classList.toggle("open");
+      }
+
       const originalQuestionsDefault = [
         {
           question:
