@@ -94,8 +94,6 @@ body {
   box-shadow: 8px 8px 0 var(--blue);
 }
 
-/* MAIN STAGE */
-
 .stage {
   position: absolute;
   top: 74px;
